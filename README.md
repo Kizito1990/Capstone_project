@@ -3,6 +3,8 @@
 ## 1.1 Project Overview
 The DRF Movie Review API is an application programming interface (API) built using Django and Django REST Framework (DRF) that allows users to manage and interact with movie reviews. It is designed to handle tasks like user authentication, managing reviews for movies, and providing endpoints to perform CRUD (Create, Read, Update, Delete) operations on reviews. This API serves as a backend system for applications that require movie review functionality.
 
+
+
 ## 1.2 Objectives
 - Implement the ability to Create, Read, Update, and Delete (CRUD) reviews.
 - Implement CRUD operations for users.
@@ -19,6 +21,8 @@ This API is ideal for:
 - Platforms where users can share and browse reviews for films.
 - Backend services for movie-related applications requiring user-generated content.
 
+## visit the api on the web
+kizito5.pythonanywhere.com/api
 
 
 # 2.0 Key Features of the DRF Movie Review API:
