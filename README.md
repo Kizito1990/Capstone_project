@@ -103,6 +103,212 @@ This project has three models
 - **Postman: Postman was used for user authentication using Token(JWT)**
 
 
+# Django Movie Review API Documentation
+
+## Overview
+The Movie Review API allows users to manage their accounts, write and view reviews for movies, and like reviews. The API is secured with JWT authentication.
+
+---
+
+## Endpoints
+
+### Authentication
+#### 1. **Register User**
+- **Path:** `/api/auth/register/`
+- **Method:** `POST`
+- **Description:** Register a new user.
+- **Request Parameters:**
+  ```json
+  {
+    "username": "string",
+    "email": "string",
+    "password": "string"
+  }
+  ```
+- **Response:**
+  - **201 Created**
+    ```json
+    {
+      "id": "integer",
+      "username": "string",
+      "email": "string"
+    }
+    ```
+  - **400 Bad Request**
+    ```json
+    {
+      "error": "string"
+    }
+    ```
+
+#### 2. **Login User**
+- **Path:** `/api/auth/login/`
+- **Method:** `POST`
+- **Description:** Authenticate a user and issue a JWT token.
+- **Request Parameters:**
+  ```json
+  {
+    "username": "string",
+    "password": "string"
+  }
+  ```
+- **Response:**
+  - **200 OK**
+    ```json
+    {
+      "access": "string",
+      "refresh": "string"
+    }
+    ```
+  - **401 Unauthorized**
+    ```json
+    {
+      "error": "string"
+    }
+    ```
+
+#### 3. **Refresh Token**
+- **Path:** `/api/auth/token/refresh/`
+- **Method:** `POST`
+- **Description:** Refresh the JWT access token.
+- **Request Parameters:**
+  ```json
+  {
+    "refresh": "string"
+  }
+  ```
+- **Response:**
+  - **200 OK**
+    ```json
+    {
+      "access": "string"
+    }
+    ```
+
+---
+
+### User
+#### 1. **Retrieve User Profile**
+- **Path:** `/api/users/profile/`
+- **Method:** `GET`
+- **Description:** Get details of the authenticated user.
+- **Headers:**
+  ```
+  Authorization: Bearer <JWT_TOKEN>
+  ```
+- **Response:**
+  - **200 OK**
+    ```json
+    {
+      "id": "integer",
+      "username": "string",
+      "email": "string"
+    }
+    ```
+
+---
+
+### Reviews
+#### 1. **Create a Review**
+- **Path:** `/api/reviews/`
+- **Method:** `POST`
+- **Description:** Add a review for a movie.
+- **Headers:**
+  ```
+  Authorization: Bearer <JWT_TOKEN>
+  ```
+- **Request Parameters:**
+  ```json
+  {
+    "movie_title": "string",
+    "content": "string",
+    "rating": "integer"  // between 1 and 5
+  }
+  ```
+- **Response:**
+  - **201 Created**
+    ```json
+    {
+      "id": "integer",
+      "movie_title": "string",
+      "content": "string",
+      "rating": "integer",
+      "user": {
+        "id": "integer",
+        "username": "string"
+      },
+      "likes": "integer"
+    }
+    ```
+
+#### 2. **Retrieve Reviews**
+- **Path:** `/api/reviews/`
+- **Method:** `GET`
+- **Description:** Retrieve all reviews.
+- **Response:**
+  - **200 OK**
+    ```json
+    [
+      {
+        "id": "integer",
+        "movie_title": "string",
+        "content": "string",
+        "rating": "integer",
+        "user": {
+          "id": "integer",
+          "username": "string"
+        },
+        "likes": "integer"
+      }
+    ]
+    ```
+
+#### 3. **Retrieve a Single Review**
+- **Path:** `/api/reviews/<id>/`
+- **Method:** `GET`
+- **Description:** Get a specific review by ID.
+- **Response:**
+  - **200 OK**
+    ```json
+    {
+      "id": "integer",
+      "movie_title": "string",
+      "content": "string",
+      "rating": "integer",
+      "user": {
+        "id": "integer",
+        "username": "string"
+      },
+      "likes": "integer"
+    }
+    ```
+
+---
+
+### Likes
+#### 1. **Like a Review**
+- **Path:** `/api/reviews/<id>/like/`
+- **Method:** `POST`
+- **Description:** Like a review.
+- **Headers:**
+  ```
+  Authorization: Bearer <JWT_TOKEN>
+  ```
+- **Response:**
+  - **200 OK**
+    ```json
+    {
+      "message": "Review liked successfully",
+      "likes": "integer"
+    }
+    ```
+
+---
+
+## Notes
+- All endpoints that modify data require JWT authentication.
+- Error handling should follow standard HTTP response codes (e.g., `400 Bad Request`, `404 Not Found`, `500 Internal Server Error`).
+
 
 
 
